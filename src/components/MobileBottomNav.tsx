@@ -1,6 +1,6 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { BarChart3, DollarSign, Zap, Target, Users, Brain } from 'lucide-react';
+import { ChartBar as BarChart3, DollarSign, Zap, Target, Users, Brain } from 'lucide-react';
 
 interface NavItem {
   id: string;
