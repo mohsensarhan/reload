@@ -19,10 +19,12 @@
     --sab: env(safe-area-inset-bottom, 0px);
     --sab-offset: calc(env(safe-area-inset-bottom, 0px) + 64px);
 
-    /* Matrix Theme - Pure Black with Green Accents */
-    --background: 0 0% 3%; /* Pure deep black */
+    /* Matrix Theme - Enhanced Deep Black with Phosphor Green */
+    --background: 0 0% 2%; /* Deeper black for terminal aesthetic */
     --foreground: 0 0% 98%;
-    --background-secondary: 0 0% 2%; /* Even darker for depth */
+    --background-secondary: 0 0% 1%; /* Even darker for depth */
+    --matrix-black: 0 0% 0%; /* Pure black */
+    --matrix-deep: 140 10% 3%; /* Very dark green-tinted black */
 
     /* Card System with Glass Morphism */
     --card: 140 10% 6%; /* Very dark with subtle green tint */
@@ -30,11 +32,15 @@
     --card-border: 142 20% 12%; /* Green-tinted border */
     --card-elevated: 140 15% 8%; /* For hover states */
 
-    /* Matrix Green Palette - EFB Brand */
+    /* Matrix Green Palette - Enhanced Phosphor Glow */
     --primary: 142 69% 58%; /* EFB Matrix Green #5FB85A */
     --primary-foreground: 0 0% 5%;
     --primary-glow: 142 76% 68%; /* Brighter glow */
     --primary-dim: 142 60% 45%; /* Dimmer version */
+    --neon-green: 125 100% 56%; /* Neon phosphor #39FF14 */
+    --phosphor-green: 133 100% 50%; /* Terminal green #00FF41 */
+    --lime-accent: 75 100% 80%; /* Bright lime #CCFF00 */
+    --cyan-accent: 180 100% 50%; /* Cyan accent #00FFFF */
 
     /* Financial Health Colors - Matrix-inspired */
     --success: 142 76% 58%; /* Bright Matrix green */
@@ -74,6 +80,8 @@
     --shadow-glow-success: 0 0 40px hsl(142 76% 58% / 0.35);
     --shadow-glow-warning: 0 0 40px hsl(38 92% 60% / 0.35);
     --shadow-glow-danger: 0 0 40px hsl(0 84% 62% / 0.35);
+    --shadow-glow-neon: 0 0 60px hsl(125 100% 56% / 0.5);
+    --shadow-matrix-deep: 0 8px 32px hsl(0 0% 0% / 0.9), inset 0 1px 0 hsl(142 69% 58% / 0.15);
 
     /* Animation Timings - Smooth and Premium */
     --timing-fast: 150ms;
@@ -533,6 +541,138 @@
 
 .animate-slide-in-right {
   animation: slide-in-right 0.5s var(--ease-smooth) forwards;
+}
+
+/* Matrix-Specific Advanced Animations */
+@keyframes matrix-scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes matrix-glitch {
+  0%, 100% { transform: translate(0); text-shadow: 0 0 10px hsl(var(--primary)); }
+  25% { transform: translate(-2px, 2px); text-shadow: -2px 0 10px hsl(var(--danger)), 2px 0 10px hsl(var(--cyan-accent)); }
+  50% { transform: translate(2px, -2px); text-shadow: 2px 0 10px hsl(var(--danger)), -2px 0 10px hsl(var(--cyan-accent)); }
+  75% { transform: translate(-2px, -2px); text-shadow: -2px 0 10px hsl(var(--cyan-accent)), 2px 0 10px hsl(var(--danger)); }
+}
+
+@keyframes terminal-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes phosphor-glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px hsl(var(--neon-green) / 0.3),
+                0 0 40px hsl(var(--neon-green) / 0.2);
+  }
+  50% {
+    box-shadow: 0 0 40px hsl(var(--neon-green) / 0.6),
+                0 0 80px hsl(var(--neon-green) / 0.4),
+                0 0 120px hsl(var(--neon-green) / 0.2);
+  }
+}
+
+@keyframes data-stream {
+  0% { transform: translateX(-100%); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateX(100%); opacity: 0; }
+}
+
+@keyframes bubble-rise {
+  0% { transform: translateY(0); opacity: 0.7; }
+  100% { transform: translateY(-200px); opacity: 0; }
+}
+
+@keyframes expand-ring {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(3); opacity: 0; }
+}
+
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes scanline {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(100vh); }
+}
+
+/* Matrix Effect Utilities */
+.matrix-glow {
+  animation: phosphor-glow-pulse 2s ease-in-out infinite;
+}
+
+.matrix-glitch {
+  animation: matrix-glitch 0.3s ease-in-out;
+}
+
+.terminal-cursor {
+  animation: terminal-blink 1s step-end infinite;
+}
+
+.scanline-overlay {
+  pointer-events: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.scanline-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    hsl(var(--primary) / 0.03) 2px,
+    hsl(var(--primary) / 0.03) 4px
+  );
+  animation: scanline 8s linear infinite;
+  opacity: 0.4;
+}
+
+.matrix-card {
+  position: relative;
+  background: linear-gradient(135deg, hsl(var(--matrix-black)) 0%, hsl(var(--matrix-deep)) 100%);
+  border: 2px solid hsl(var(--primary) / 0.3);
+  box-shadow: var(--shadow-matrix-deep);
+  transition: all var(--timing-base) var(--ease-smooth);
+}
+
+.matrix-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, hsl(var(--neon-green)), transparent);
+  animation: data-stream 3s linear infinite;
+}
+
+.matrix-card:hover {
+  border-color: hsl(var(--primary) / 0.6);
+  box-shadow: var(--shadow-matrix-deep), var(--shadow-glow-neon);
+  transform: translateY(-2px) scale(1.01);
+}
+
+/* Responsive Motion Preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .matrix-glitch,
+  .matrix-scan,
+  .scanline-overlay::before {
+    animation: none !important;
+  }
 }
 
 /* Structural page grid that uses the global layout tokens */
