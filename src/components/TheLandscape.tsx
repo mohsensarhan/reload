@@ -2,17 +2,7 @@ import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import {
-  TrendingUp,
-  TrendingDown,
-  Activity,
-  AlertTriangle,
-  Globe,
-  DollarSign,
-  Droplets,
-  Users,
-  ChevronRight
-} from 'lucide-react';
+import { TrendingUp, TrendingDown, Activity, TriangleAlert as AlertTriangle, Globe, DollarSign, Droplets, Users, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useGlobalSignals } from '@/hooks/useGlobalSignals';
 import { FORCE_MOCK, DATA_SOURCE } from '@/config/dataMode';
