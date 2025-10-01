@@ -3,7 +3,18 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Shield, GraduationCap, Heart, Users, Target, TrendingUp, Calendar, Award, CircleCheck as CheckCircle2, CircleAlert as AlertCircle } from 'lucide-react';
+import { 
+  Shield, 
+  GraduationCap, 
+  Heart, 
+  Users, 
+  Target,
+  TrendingUp,
+  Calendar,
+  Award,
+  CheckCircle2,
+  AlertCircle
+} from 'lucide-react';
 import { MetricDetailModal } from './MetricDetailModal';
 import { cn } from '@/lib/utils';
 
@@ -155,34 +166,6 @@ export function ProgramsAnalytics() {
           4.97M Beneficiaries
         </Badge>
       </div>
-
-      {/* Context Banner - Programs Serve Through Operations */}
-      <Card className="executive-card bg-gradient-to-r from-warning/5 to-primary/5 border-warning/20">
-        <CardContent className="p-6">
-          <div className="flex items-start gap-4">
-            <div className="p-3 bg-warning/10 rounded-lg">
-              <Target className="w-6 h-6 text-warning" />
-            </div>
-            <div className="flex-1">
-              <h3 className="text-lg font-semibold mb-2">Programs Ecosystem</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-                <div>
-                  <div className="text-muted-foreground">Supported by operational network:</div>
-                  <div className="font-bold text-success">5,000 partners + 93,000 volunteers</div>
-                </div>
-                <div>
-                  <div className="text-muted-foreground">Delivered through logistics:</div>
-                  <div className="font-bold text-primary">20 warehouses, 94.7% efficiency</div>
-                </div>
-                <div>
-                  <div className="text-muted-foreground">Funded by diverse revenues:</div>
-                  <div className="font-bold text-warning">EGP 2.2B annual revenue</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
 
       {/* Key Program Metrics */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

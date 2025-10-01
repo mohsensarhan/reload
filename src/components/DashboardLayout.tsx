@@ -5,8 +5,6 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 import { Users, Target, DollarSign, Globe, Menu, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { BreadcrumbNavigation } from '@/components/BreadcrumbNavigation';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { GlobalSearch } from '@/components/GlobalSearch';
-import { KeyboardShortcutsHelp } from '@/components/KeyboardShortcutsHelp';
 import efbLogo from '@/assets/efb-logo.png';
 import { formatNumber, formatSimpleNumber, formatCurrency } from '@/lib/formatters';
 
@@ -28,64 +26,11 @@ interface DashboardLayoutProps {
   sidebar: React.ReactNode;
   children: React.ReactNode;
   breadcrumbs?: BreadcrumbItem[];
-  currentSection?: string;
-  onSectionChange?: (sectionId: string) => void;
 }
 
-export function DashboardLayout({ metrics, sidebar, children, breadcrumbs = [], currentSection = 'executive', onSectionChange }: DashboardLayoutProps) {
+export function DashboardLayout({ metrics, sidebar, children, breadcrumbs = [] }: DashboardLayoutProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-
-  const keyboardShortcuts = [
-    {
-      key: 'k',
-      meta: true,
-      description: 'Open search',
-      action: () => {}
-    },
-    {
-      key: '1',
-      meta: true,
-      description: 'Go to Executive Dashboard',
-      action: () => onSectionChange?.('executive')
-    },
-    {
-      key: '2',
-      meta: true,
-      description: 'Go to Financial Analytics',
-      action: () => onSectionChange?.('financial')
-    },
-    {
-      key: '3',
-      meta: true,
-      description: 'Go to Operations',
-      action: () => onSectionChange?.('operational')
-    },
-    {
-      key: '4',
-      meta: true,
-      description: 'Go to Programs',
-      action: () => onSectionChange?.('programs')
-    },
-    {
-      key: '5',
-      meta: true,
-      description: 'Go to Stakeholders',
-      action: () => onSectionChange?.('stakeholders')
-    },
-    {
-      key: '6',
-      meta: true,
-      description: 'Go to Scenarios',
-      action: () => onSectionChange?.('scenarios')
-    },
-    {
-      key: '?',
-      shift: true,
-      description: 'Show keyboard shortcuts',
-      action: () => {}
-    }
-  ];
 
   return (
     <div className="h-screen bg-background font-sans flex w-full">
@@ -242,7 +187,7 @@ export function DashboardLayout({ metrics, sidebar, children, breadcrumbs = [], 
             />
           )}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
-            <div className="flex items-center gap-4 flex-1">
+            <div className="flex items-center gap-4">
               {/* Mobile Menu Button */}
               <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
                 <SheetTrigger asChild>
@@ -401,12 +346,6 @@ export function DashboardLayout({ metrics, sidebar, children, breadcrumbs = [], 
                   Advanced analytics and real-time monitoring of Egypt's largest food security operation
                 </p>
               </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <GlobalSearch
-                onNavigate={(sectionId) => onSectionChange?.(sectionId)}
-              />
-              <KeyboardShortcutsHelp shortcuts={keyboardShortcuts} />
             </div>
           </div>
         </header>

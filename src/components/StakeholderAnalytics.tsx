@@ -188,8 +188,8 @@ export function StakeholderAnalytics() {
           </p>
         </div>
         <div className="flex flex-col sm:items-end gap-2">
-          <Badge
-            variant="outline"
+          <Badge 
+            variant="outline" 
             className="text-success border-success bg-success/5 px-4 py-2 text-sm font-medium rounded-lg"
           >
             <div className="flex items-center gap-2">
@@ -200,45 +200,6 @@ export function StakeholderAnalytics() {
           <span className="text-xs text-muted-foreground">Updated every 5 minutes</span>
         </div>
       </div>
-
-      {/* Stakeholder Ecosystem Map */}
-      <Card className="executive-card bg-gradient-to-r from-primary/5 to-purple/5 border-primary/20">
-        <CardContent className="p-6">
-          <h3 className="text-lg font-semibold mb-4">Complete Stakeholder Ecosystem</h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
-            <div className="p-3 bg-success/10 rounded-lg">
-              <Users className="w-6 h-6 mx-auto mb-2 text-success" />
-              <div className="font-bold text-sm">4.96M</div>
-              <div className="text-xs text-muted-foreground">Beneficiaries</div>
-            </div>
-            <div className="p-3 bg-primary/10 rounded-lg">
-              <Heart className="w-6 h-6 mx-auto mb-2 text-primary" />
-              <div className="font-bold text-sm">93,000</div>
-              <div className="text-xs text-muted-foreground">Volunteers</div>
-            </div>
-            <div className="p-3 bg-warning/10 rounded-lg">
-              <Users className="w-6 h-6 mx-auto mb-2 text-warning" />
-              <div className="font-bold text-sm">Top 1%</div>
-              <div className="text-xs text-muted-foreground">Major Donors</div>
-            </div>
-            <div className="p-3 bg-purple/10 rounded-lg">
-              <Users className="w-6 h-6 mx-auto mb-2 text-purple" />
-              <div className="font-bold text-sm">5,000</div>
-              <div className="text-xs text-muted-foreground">Partners</div>
-            </div>
-            <div className="p-3 bg-danger/10 rounded-lg">
-              <MessageSquare className="w-6 h-6 mx-auto mb-2 text-danger" />
-              <div className="font-bold text-sm">100%</div>
-              <div className="text-xs text-muted-foreground">Media Coverage</div>
-            </div>
-            <div className="p-3 bg-muted/40 rounded-lg">
-              <Share2 className="w-6 h-6 mx-auto mb-2" />
-              <div className="font-bold text-sm">Active</div>
-              <div className="text-xs text-muted-foreground">Government</div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
 
       {/* Brand & Reputation Overview */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">

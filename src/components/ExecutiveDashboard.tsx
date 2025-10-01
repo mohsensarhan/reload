@@ -24,7 +24,7 @@ import { createExecutiveMetrics } from '@/data/executiveMetrics';
 import { formatSimpleNumber, formatPercentage, formatCurrency, formatNumber } from '@/lib/formatters';
 import { cn } from '@/lib/utils';
 import { GrowthTrajectoryChart } from './GrowthTrajectoryChart';
-import {
+import { 
   LazyAdvancedFinancialAnalytics,
   LazyOperationalAnalytics,
   LazyProgramsAnalytics,
@@ -32,21 +32,8 @@ import {
   LazyScenarioAnalysis,
   LazyComponentWrapper
 } from './LazyComponents';
-import { TheLandscape } from './TheLandscape';
+import { GlobalSignalsSection } from './GlobalSignalsSection';
 import { PageGrid } from '@/layout/PageGrid';
-import { ExecutiveSummary } from './ExecutiveSummary';
-import { MobileBottomNav } from './MobileBottomNav';
-import { ExportMenu } from './ExportMenu';
-import { TimeRangeSelector } from './TimeRangeSelector';
-import { useUserPreferences } from '@/hooks/useUserPreferences';
-import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
-import { DateRange } from 'react-day-picker';
-import { prepareMetricsForExport } from '@/lib/exportUtils';
-import { DigitalTransformationChart } from './DigitalTransformationChart';
-import { StuntingReductionChart } from './StuntingReductionChart';
-import { NarrativeDashboard } from './NarrativeDashboard';
-import { MatrixRain } from './MatrixRain';
-import { ActProgressIndicator } from './ActProgressIndicator';
 
 export interface Metric {
   title: string;
@@ -85,15 +72,14 @@ const baseMetrics: DashboardMetrics = {
 };
 
 const ExecutiveDashboard = memo(() => {
+  // Get initial section from URL or default to 'executive'
   const getInitialSection = () => {
     const hash = window.location.hash.replace('#', '');
-    const validSections = ['narrative', 'executive', 'financial', 'operational', 'programs', 'stakeholders', 'scenarios'];
-    return validSections.includes(hash) ? hash : 'narrative';
+    const validSections = ['executive', 'financial', 'operational', 'programs', 'stakeholders', 'scenarios'];
+    return validSections.includes(hash) ? hash : 'executive';
   };
-
+  
   const [currentSection, setCurrentSection] = useState(getInitialSection);
-  const [dateRange, setDateRange] = React.useState<DateRange | undefined>();
-  const { preferences } = useUserPreferences();
   const [selectedMetric, setSelectedMetric] = useState<Metric | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showModelModal, setShowModelModal] = useState(false);
@@ -237,42 +223,10 @@ const ExecutiveDashboard = memo(() => {
 
   const renderCurrentSection = () => {
     switch (currentSection) {
-      case 'narrative':
-        return (
-          <div className="relative">
-            <MatrixRain opacity={0.08} speed={1.2} fontSize={14} />
-            <ActProgressIndicator />
-            <div className="relative z-10">
-              <NarrativeDashboard />
-            </div>
-          </div>
-        );
       case 'executive':
         return (
           <div className="space-y-8">
-            {/* 1. COMMAND BRIEF - Executive Summary with AI Insights */}
-            <section className="mb-8">
-              <ExecutiveSummary metrics={calculatedMetrics || baseMetrics} />
-            </section>
-
-            {/* Toolbar with filters and export */}
-            <section className="mb-6">
-              <div className="flex items-center justify-between gap-4 flex-wrap">
-                <TimeRangeSelector
-                  value={dateRange}
-                  onChange={setDateRange}
-                  className="w-auto"
-                />
-                <ExportMenu data={exportData} />
-              </div>
-            </section>
-
-            {/* 2. EXTERNAL CONTEXT - The Landscape */}
-            <section id="global-indicators" className="mb-12">
-              <TheLandscape />
-            </section>
-
-            {/* 3. STRATEGIC OVERVIEW - Key Performance Indicators */}
+            {/* 1. STRATEGIC OVERVIEW - Key Performance Indicators */}
             <section>
               <div className="mb-6">
                 <h2 className="heading-lg flex items-center gap-3">
@@ -282,16 +236,8 @@ const ExecutiveDashboard = memo(() => {
                 <p className="text-muted-foreground mt-2">
                   Critical metrics demonstrating EFB's impact and operational excellence
                 </p>
-                <div className="mt-3 flex gap-2">
-                  <Badge variant="outline" className="text-xs text-primary border-primary cursor-pointer hover:bg-primary/10" onClick={() => handleSectionChange('financial')}>
-                    📊 View Financial Deep-Dive
-                  </Badge>
-                  <Badge variant="outline" className="text-xs text-success border-success cursor-pointer hover:bg-success/10" onClick={() => handleSectionChange('operational')}>
-                    🚚 View Operations Details
-                  </Badge>
-                </div>
               </div>
-
+              
               <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
                 <MetricCard
                   title="Lives Impacted"
@@ -305,7 +251,7 @@ const ExecutiveDashboard = memo(() => {
                   description="Unique individuals reached nationwide"
                   onClick={() => setSelectedMetric(executiveMetrics.livesImpacted)}
                 />
-
+                
                 <MetricCard
                   title="Meals Delivered"
                   value={calculatedMetrics?.mealsDelivered || baseMetrics.mealsDelivered}
@@ -318,7 +264,7 @@ const ExecutiveDashboard = memo(() => {
                   description="Total annual food assistance"
                   onClick={() => setSelectedMetric(executiveMetrics.mealsDelivered)}
                 />
-
+                
                 <MetricCard
                   title="Cost Per Meal"
                   value={calculatedMetrics?.costPerMeal || baseMetrics.costPerMeal}
@@ -331,7 +277,7 @@ const ExecutiveDashboard = memo(() => {
                   description="All-inclusive program cost"
                   onClick={() => setSelectedMetric(executiveMetrics.costPerMeal)}
                 />
-
+                
                 <MetricCard
                   title="Coverage"
                   value={27}
@@ -347,7 +293,7 @@ const ExecutiveDashboard = memo(() => {
               </div>
             </section>
 
-            {/* 4. GROWTH ANALYSIS - Five-Year Trajectory */}
+            {/* 2. PERFORMANCE ANALYSIS - Financial Health */}
             <section>
               <div className="mb-6">
                 <h2 className="heading-lg flex items-center gap-3">
@@ -358,33 +304,45 @@ const ExecutiveDashboard = memo(() => {
                   Five-year growth analysis demonstrating EFB's exceptional scale expansion and impact acceleration
                 </p>
               </div>
-
+              
               <GrowthTrajectoryChart />
             </section>
 
-            {/* 5. FINANCIAL HEALTH - Comprehensive Analysis */}
-            <section>
+            {/* 2. GLOBAL & EGYPT INDICATORS */}
+            <section id="global-indicators" className="mt-8 mb-12">
+              <div className="mb-4">
+                <h2 className="heading-lg flex items-center gap-3">
+                  <Globe className="w-6 h-6 text-primary" />
+                  Global & Egypt Indicators
+                </h2>
+                <p className="text-muted-foreground mt-2">
+                  Live macro, prices, and climate signals from official sources
+                </p>
+              </div>
+              <div className="mb-8">
+                <GlobalSignalsSection />
+              </div>
+            </section>
+
+            {/* 3. PERFORMANCE ANALYSIS - Financial Health */}
+            <section className="mt-16">
               <div className="mb-6">
                 <h2 className="heading-lg flex items-center gap-3">
                   <Activity className="w-6 h-6 text-success" />
-                  Financial Health Dashboard
+                  Financial Performance Analysis
                 </h2>
                 <p className="text-muted-foreground mt-2">
                   Comprehensive financial health indicators and operational efficiency metrics
                 </p>
-                <div className="mt-3">
-                  <Badge variant="outline" className="text-xs text-primary border-primary cursor-pointer hover:bg-primary/10" onClick={() => handleSectionChange('financial')}>
-                    💰 View Full Financial Analytics
-                  </Badge>
-                </div>
               </div>
-
+              
               <ErrorBoundary>
                 <FinancialHealthGrid metrics={calculatedMetrics || baseMetrics} />
               </ErrorBoundary>
             </section>
 
-            {/* 6. OPERATIONAL PERFORMANCE - Impact Analytics */}
+
+            {/* 4. OPERATIONAL EXCELLENCE - Impact Analytics */}
             <section>
               <div className="mb-6">
                 <h2 className="heading-lg flex items-center gap-3">
@@ -394,22 +352,80 @@ const ExecutiveDashboard = memo(() => {
                 <p className="text-muted-foreground mt-2">
                   Detailed performance metrics and outcome measurement across all programs
                 </p>
-                <div className="mt-3 flex gap-2">
-                  <Badge variant="outline" className="text-xs text-success border-success cursor-pointer hover:bg-success/10" onClick={() => handleSectionChange('operational')}>
-                    📦 View Operations Dashboard
-                  </Badge>
-                  <Badge variant="outline" className="text-xs text-warning border-warning cursor-pointer hover:bg-warning/10" onClick={() => handleSectionChange('programs')}>
-                    🎯 View Programs Analytics
-                  </Badge>
-                </div>
               </div>
-
+              
               <ImpactAnalytics metrics={calculatedMetrics || baseMetrics} />
+            </section>
+
+            {/* 5. DECISION SUPPORT - Executive Recommendations */}
+            <section>
+              <div className="mb-6">
+                <h2 className="heading-lg flex items-center gap-3">
+                  <Lightbulb className="w-6 h-6 text-primary-glow" />
+                  Strategic Recommendations
+                </h2>
+                <p className="text-muted-foreground mt-2">
+                  Data-driven insights and actionable recommendations for executive decision-making
+                </p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <Card className="executive-card">
+                  <CardHeader>
+                    <CardTitle className="text-success flex items-center gap-2">
+                      <TrendingUp className="w-5 h-5" />
+                      Growth Opportunities
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <div className="text-sm space-y-2">
+                      <div>• Scale to 6M beneficiaries by FY2026</div>
+                      <div>• Expand into 3 additional countries</div>
+                      <div>• Launch prevention programs in urban areas</div>
+                      <div>• Implement AI-driven supply chain optimization</div>
+                    </div>
+                  </CardContent>
+                </Card>
+                
+                <Card className="executive-card">
+                  <CardHeader>
+                    <CardTitle className="text-warning flex items-center gap-2">
+                      <AlertTriangle className="w-5 h-5" />
+                      Risk Mitigation
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <div className="text-sm space-y-2">
+                      <div>• Diversify funding sources beyond 60%</div>
+                      <div>• Build 6-month operational reserves</div>
+                      <div>• Develop crisis response protocols</div>
+                      <div>• Strengthen government partnerships</div>
+                    </div>
+                  </CardContent>
+                </Card>
+                
+                <Card className="executive-card">
+                  <CardHeader>
+                    <CardTitle className="text-primary flex items-center gap-2">
+                      <Target className="w-5 h-5" />
+                      Innovation Priorities
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <div className="text-sm space-y-2">
+                      <div>• Deploy blockchain for transparency</div>
+                      <div>• Launch mobile nutrition education</div>
+                      <div>• Implement biometric beneficiary tracking</div>
+                      <div>• Develop predictive demand modeling</div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
             </section>
 
             {/* Executive Summary Modal */}
             {selectedMetric && (
-              <MetricDetailModal
+              <MetricDetailModal 
                 isOpen={!!selectedMetric}
                 onClose={() => setSelectedMetric(null)}
                 metric={selectedMetric}
@@ -444,183 +460,164 @@ const ExecutiveDashboard = memo(() => {
       case 'scenarios':
         return (
           <div className="space-y-8">
-            {/* Header Section */}
-            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 bg-background border border-border rounded-lg p-4 sm:p-6">
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="p-2 bg-primary/10 rounded-lg">
-                    <Brain className="w-6 h-6 text-primary" />
-                  </div>
-                  <h2 className="text-xl lg:text-2xl font-semibold text-foreground">Advanced Scenario Modeling</h2>
-                </div>
-                <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
-                  Interactive econometric modeling with 89.3% forecast accuracy. Adjust 11 economic variables below to explore their impact on EFB operations.
-                </p>
+                   {/* Sticky Header with Model Info Button */}
+                   <div className="sticky top-0 z-50 bg-background/98 backdrop-blur-md border border-border rounded-lg p-1 sm:p-4 lg:p-6 transition-all duration-200 overflow-hidden shadow-lg -mx-3 sm:-mx-6 mx-0">
+                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                       <div className="flex-1">
+                         <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+                           <div className="p-2 bg-primary/10 rounded-lg">
+                             <Brain className="w-4 h-4 sm:w-6 sm:h-6 text-primary" />
+                           </div>
+                           <h2 className="text-sm sm:text-xl lg:text-2xl font-semibold text-foreground">Advanced Scenario Modeling</h2>
+                         </div>
+                         <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed max-w-full sm:max-w-2xl hidden sm:block">
+                           Interactive econometric modeling with 89.3% forecast accuracy. Adjust variables to explore different scenarios and their impact on EFB operations.
+                         </p>
+                       </div>
+                       <div className="flex flex-col sm:items-end gap-2">
+                         <Button
+                           variant="outline"
+                           size="sm"
+                           onClick={() => setShowModelModal(true)}
+                           className="text-primary border-primary hover:bg-primary/5 text-xs sm:text-sm px-2 sm:px-4"
+                         >
+                           <Info className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                           Model Details
+                         </Button>
+                         <span className="text-xs text-muted-foreground hidden sm:inline">Last calibrated: Dec 2024</span>
+                       </div>
+                     </div>
+
+                     
+                     {/* Integrated Live Impact Summary - Only sticky on desktop */}
+                     <div className="mt-2 sm:mt-6 pt-2 sm:pt-6 border-t border-border">
+                       {/* Live indicator */}
+                       <div className="flex items-center justify-center mb-2 sm:mb-4">
+                         <div className="flex items-center gap-2 px-3 py-1 bg-success/10 border border-success/30 rounded-full">
+                           <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>
+                           <span className="text-xs font-medium text-success">Live Updates</span>
+                         </div>
+                       </div>
+                       
+                       {/* All 11 Metrics - Completely Uniform Styling */}
+                       <div className="grid grid-cols-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-1 sm:gap-2 lg:gap-3 overflow-hidden">
+                         {/* Primary Metrics - All with identical styling */}
+                         <div className="text-center p-1 sm:p-2 lg:p-3 bg-success/10 rounded border border-success/30 shadow-sm transition-all duration-300 hover:shadow-md min-w-0">
+                           <div className="text-xs sm:text-lg lg:text-xl font-bold text-success transition-all duration-200">
+                             {formatNumber(calculatedMetrics?.peopleServed || baseMetrics.peopleServed)}
+                           </div>
+                           <div className="text-xs text-muted-foreground font-medium truncate hidden sm:block">People</div>
+                           <div className="text-xs text-muted-foreground font-medium truncate sm:hidden">P</div>
+                         </div>
+                         <div className="text-center p-1 sm:p-2 lg:p-3 bg-primary/10 rounded border border-primary/30 shadow-sm transition-all duration-300 hover:shadow-md min-w-0">
+                           <div className="text-xs sm:text-lg lg:text-xl font-bold text-primary transition-all duration-200">
+                             {formatNumber(calculatedMetrics?.mealsDelivered || baseMetrics.mealsDelivered)}
+                           </div>
+                           <div className="text-xs text-muted-foreground font-medium truncate hidden sm:block">Meals</div>
+                           <div className="text-xs text-muted-foreground font-medium truncate sm:hidden">M</div>
+                         </div>
+                         <div className="text-center p-1 sm:p-2 lg:p-3 bg-warning/10 rounded border border-warning/30 shadow-sm transition-all duration-300 hover:shadow-md min-w-0">
+                           <div className="text-xs sm:text-lg lg:text-xl font-bold text-warning transition-all duration-200">
+                             {formatCurrency(calculatedMetrics?.costPerMeal || baseMetrics.costPerMeal)}
+                           </div>
+                           <div className="text-xs text-muted-foreground font-medium truncate hidden sm:block">Cost/Meal</div>
+                           <div className="text-xs text-muted-foreground font-medium truncate sm:hidden">C</div>
+                         </div>
+                         <div className="text-center p-1 sm:p-2 lg:p-3 bg-accent/10 rounded border border-accent/30 shadow-sm transition-all duration-300 hover:shadow-md min-w-0">
+                           <div className={cn(
+                             "text-xs sm:text-lg lg:text-xl font-bold transition-all duration-200",
+                             (((calculatedMetrics?.revenue || baseMetrics.revenue) - (calculatedMetrics?.expenses || baseMetrics.expenses)) / (calculatedMetrics?.revenue || baseMetrics.revenue)) * 100 > 0
+                               ? "text-success"
+                               : "text-danger"
+                           )}>
+                             {formatPercentage((((calculatedMetrics?.revenue || baseMetrics.revenue) - (calculatedMetrics?.expenses || baseMetrics.expenses)) / (calculatedMetrics?.revenue || baseMetrics.revenue)) * 100)}
+                           </div>
+                           <div className="text-xs text-muted-foreground font-medium truncate hidden sm:block">Margin</div>
+                           <div className="text-xs text-muted-foreground font-medium truncate sm:hidden">Mg</div>
+                         </div>
+                         
+                         {/* Change Metrics - All with identical styling */}
+                         <div className="text-center p-1 sm:p-2 lg:p-3 bg-muted/40 rounded border border-border shadow-sm transition-all duration-300 hover:shadow-md min-w-0">
+                           <div className={cn("text-xl font-bold transition-all duration-200", 
+                             (calculatedMetrics?.revenueChange || 0) > 0 ? "text-success" : "text-danger"
+                           )}>
+                             {(calculatedMetrics?.revenueChange || 0) > 0 ? '+' : ''}{(calculatedMetrics?.revenueChange || 0).toFixed(1)}%
+                           </div>
+                           <div className="text-xs text-muted-foreground font-medium truncate hidden sm:block">Revenue Δ</div>
+                           <div className="text-xs text-muted-foreground font-medium truncate sm:hidden">R</div>
+                         </div>
+                         <div className="text-center p-1 sm:p-2 lg:p-3 bg-muted/40 rounded border border-border shadow-sm transition-all duration-300 hover:shadow-md min-w-0">
+                           <div className={cn("text-xl font-bold transition-all duration-200",
+                             Math.abs(calculatedMetrics?.demandChange || 0) < 5 ? "text-success" : "text-warning"
+                           )}>
+                             {(calculatedMetrics?.demandChange || 0) > 0 ? '+' : ''}{(calculatedMetrics?.demandChange || 0).toFixed(1)}%
+                           </div>
+                           <div className="text-xs text-muted-foreground font-medium truncate hidden sm:block">Demand Δ</div>
+                           <div className="text-xs text-muted-foreground font-medium truncate sm:hidden">D</div>
+                         </div>
+                         <div className="text-center p-1 sm:p-2 lg:p-3 bg-muted/40 rounded border border-border shadow-sm transition-all duration-300 hover:shadow-md min-w-0">
+                           <div className={cn("text-xl font-bold transition-all duration-200",
+                             (calculatedMetrics?.costChange || 0) < 0 ? "text-success" : "text-danger"
+                           )}>
+                             {(calculatedMetrics?.costChange || 0) > 0 ? '+' : ''}{(calculatedMetrics?.costChange || 0).toFixed(1)}%
+                           </div>
+                           <div className="text-xs text-muted-foreground font-medium truncate hidden sm:block">Cost Δ</div>
+                           <div className="text-xs text-muted-foreground font-medium truncate sm:hidden">C</div>
+                         </div>
+                         <div className="text-center p-1 sm:p-2 lg:p-3 bg-muted/40 rounded border border-border shadow-sm transition-all duration-300 hover:shadow-md min-w-0">
+                           <div className={cn("text-xl font-bold transition-all duration-200",
+                             (calculatedMetrics?.efficiencyChange || 0) > 0 ? "text-success" : "text-danger"
+                           )}>
+                             {(calculatedMetrics?.efficiencyChange || 0) > 0 ? '+' : ''}{(calculatedMetrics?.efficiencyChange || 0).toFixed(1)}%
+                           </div>
+                           <div className="text-xs text-muted-foreground font-medium truncate hidden sm:block">Efficiency Δ</div>
+                           <div className="text-xs text-muted-foreground font-medium truncate sm:hidden">E</div>
+                         </div>
+                         
+                         {/* Additional Change Metrics - Same exact styling as above */}
+                         {calculatedMetrics?.reserveChange !== undefined && (
+                           <div className="text-center p-1 sm:p-2 lg:p-3 bg-muted/40 rounded border border-border shadow-sm transition-all duration-300 hover:shadow-md min-w-0 hidden sm:block">
+                             <div className={cn("text-xl font-bold transition-all duration-200",
+                               calculatedMetrics?.reserveChange > 0 ? "text-success" : "text-danger"
+                             )}>
+                               {calculatedMetrics?.reserveChange > 0 ? '+' : ''}{calculatedMetrics?.reserveChange.toFixed(1)}%
+                             </div>
+                             <div className="text-xs text-muted-foreground font-medium truncate">Reserves Δ</div>
+                           </div>
+                         )}
+                         {calculatedMetrics?.cashChange !== undefined && (
+                           <div className="text-center p-1 sm:p-2 lg:p-3 bg-muted/40 rounded border border-border shadow-sm transition-all duration-300 hover:shadow-md min-w-0 hidden sm:block">
+                             <div className={cn("text-xl font-bold transition-all duration-200",
+                               calculatedMetrics?.cashChange > 0 ? "text-success" : "text-danger"
+                             )}>
+                               {calculatedMetrics?.cashChange > 0 ? '+' : ''}{calculatedMetrics?.cashChange.toFixed(1)}%
+                             </div>
+                             <div className="text-xs text-muted-foreground font-medium truncate">Cash Δ</div>
+                           </div>
+                         )}
+                         {calculatedMetrics?.mealsChange !== undefined && (
+                           <div className="text-center p-1 sm:p-2 lg:p-3 bg-muted/40 rounded border border-border shadow-sm transition-all duration-300 hover:shadow-md min-w-0 hidden sm:block">
+                             <div className={cn("text-xl font-bold transition-all duration-200",
+                               calculatedMetrics?.mealsChange > 0 ? "text-success" : "text-danger"
+                             )}>
+                               {calculatedMetrics?.mealsChange > 0 ? '+' : ''}{calculatedMetrics?.mealsChange.toFixed(1)}%
+                             </div>
+                             <div className="text-xs text-muted-foreground font-medium truncate">Meals Δ</div>
+                           </div>
+                         )}
+                       </div>
+                     </div>
+                   </div>
+
+                   {/* Scenario Analysis Controls */}
+                   <div className="pt-4">
+                <LazyComponentWrapper>
+                  <LazyScenarioAnalysis 
+                    factors={scenarioFactors}
+                    onFactorChange={updateScenario}
+                  />
+                </LazyComponentWrapper>
               </div>
-              <div className="flex flex-col sm:items-end gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setShowModelModal(true)}
-                  className="text-primary border-primary hover:bg-primary/5"
-                >
-                  <Info className="w-4 h-4 mr-2" />
-                  Model Methodology
-                </Button>
-                <span className="text-xs text-muted-foreground">Last calibrated: Dec 2024</span>
-              </div>
-            </div>
-
-            {/* HERO SECTION - Live Impact Metrics */}
-            <section>
-              <div className="mb-6">
-                <div className="flex items-center justify-center gap-2 mb-4">
-                  <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>
-                  <span className="text-sm font-medium text-success">Live Scenario Impact</span>
-                </div>
-                <h3 className="text-center text-2xl font-bold mb-2">Real-Time Projected Outcomes</h3>
-                <p className="text-center text-sm text-muted-foreground max-w-3xl mx-auto">
-                  These metrics update instantly as you adjust the economic variables below, showing projected impact on EFB operations
-                </p>
-              </div>
-
-              {/* Primary Impact Metrics - Large Cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                <Card className="executive-card">
-                  <CardContent className="p-6 text-center">
-                    <div className="text-xs text-muted-foreground mb-2">People Served</div>
-                    <div className="text-3xl font-bold text-success mb-1">
-                      {formatNumber(calculatedMetrics?.peopleServed || baseMetrics.peopleServed)}
-                    </div>
-                    <div className="text-sm text-muted-foreground">unique individuals</div>
-                  </CardContent>
-                </Card>
-
-                <Card className="executive-card">
-                  <CardContent className="p-6 text-center">
-                    <div className="text-xs text-muted-foreground mb-2">Meals Delivered</div>
-                    <div className="text-3xl font-bold text-primary mb-1">
-                      {formatNumber(calculatedMetrics?.mealsDelivered || baseMetrics.mealsDelivered)}
-                    </div>
-                    <div className="text-sm text-muted-foreground">annually</div>
-                  </CardContent>
-                </Card>
-
-                <Card className="executive-card">
-                  <CardContent className="p-6 text-center">
-                    <div className="text-xs text-muted-foreground mb-2">Cost Per Meal</div>
-                    <div className="text-3xl font-bold text-warning mb-1">
-                      {formatCurrency(calculatedMetrics?.costPerMeal || baseMetrics.costPerMeal)}
-                    </div>
-                    <div className="text-sm text-muted-foreground">EGP per meal</div>
-                  </CardContent>
-                </Card>
-
-                <Card className="executive-card">
-                  <CardContent className="p-6 text-center">
-                    <div className="text-xs text-muted-foreground mb-2">Operating Margin</div>
-                    <div className={cn(
-                      "text-3xl font-bold mb-1",
-                      (((calculatedMetrics?.revenue || baseMetrics.revenue) - (calculatedMetrics?.expenses || baseMetrics.expenses)) / (calculatedMetrics?.revenue || baseMetrics.revenue)) * 100 > 0
-                        ? "text-success"
-                        : "text-danger"
-                    )}>
-                      {formatPercentage((((calculatedMetrics?.revenue || baseMetrics.revenue) - (calculatedMetrics?.expenses || baseMetrics.expenses)) / (calculatedMetrics?.revenue || baseMetrics.revenue)) * 100)}
-                    </div>
-                    <div className="text-sm text-muted-foreground">revenue margin</div>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* Change Metrics Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
-                <div className="text-center p-3 bg-muted/40 rounded-lg border border-border">
-                  <div className={cn("text-2xl font-bold transition-all duration-200",
-                    (calculatedMetrics?.revenueChange || 0) > 0 ? "text-success" : "text-danger"
-                  )}>
-                    {(calculatedMetrics?.revenueChange || 0) > 0 ? '+' : ''}{(calculatedMetrics?.revenueChange || 0).toFixed(1)}%
-                  </div>
-                  <div className="text-xs text-muted-foreground font-medium mt-1">Revenue Δ</div>
-                </div>
-
-                <div className="text-center p-3 bg-muted/40 rounded-lg border border-border">
-                  <div className={cn("text-2xl font-bold transition-all duration-200",
-                    Math.abs(calculatedMetrics?.demandChange || 0) < 5 ? "text-success" : "text-warning"
-                  )}>
-                    {(calculatedMetrics?.demandChange || 0) > 0 ? '+' : ''}{(calculatedMetrics?.demandChange || 0).toFixed(1)}%
-                  </div>
-                  <div className="text-xs text-muted-foreground font-medium mt-1">Demand Δ</div>
-                </div>
-
-                <div className="text-center p-3 bg-muted/40 rounded-lg border border-border">
-                  <div className={cn("text-2xl font-bold transition-all duration-200",
-                    (calculatedMetrics?.costChange || 0) < 0 ? "text-success" : "text-danger"
-                  )}>
-                    {(calculatedMetrics?.costChange || 0) > 0 ? '+' : ''}{(calculatedMetrics?.costChange || 0).toFixed(1)}%
-                  </div>
-                  <div className="text-xs text-muted-foreground font-medium mt-1">Cost Δ</div>
-                </div>
-
-                <div className="text-center p-3 bg-muted/40 rounded-lg border border-border">
-                  <div className={cn("text-2xl font-bold transition-all duration-200",
-                    (calculatedMetrics?.efficiencyChange || 0) > 0 ? "text-success" : "text-danger"
-                  )}>
-                    {(calculatedMetrics?.efficiencyChange || 0) > 0 ? '+' : ''}{(calculatedMetrics?.efficiencyChange || 0).toFixed(1)}%
-                  </div>
-                  <div className="text-xs text-muted-foreground font-medium mt-1">Efficiency Δ</div>
-                </div>
-
-                {calculatedMetrics?.reserveChange !== undefined && (
-                  <div className="text-center p-3 bg-muted/40 rounded-lg border border-border">
-                    <div className={cn("text-2xl font-bold transition-all duration-200",
-                      calculatedMetrics?.reserveChange > 0 ? "text-success" : "text-danger"
-                    )}>
-                      {calculatedMetrics?.reserveChange > 0 ? '+' : ''}{calculatedMetrics?.reserveChange.toFixed(1)}%
-                    </div>
-                    <div className="text-xs text-muted-foreground font-medium mt-1">Reserves Δ</div>
-                  </div>
-                )}
-
-                {calculatedMetrics?.cashChange !== undefined && (
-                  <div className="text-center p-3 bg-muted/40 rounded-lg border border-border">
-                    <div className={cn("text-2xl font-bold transition-all duration-200",
-                      calculatedMetrics?.cashChange > 0 ? "text-success" : "text-danger"
-                    )}>
-                      {calculatedMetrics?.cashChange > 0 ? '+' : ''}{calculatedMetrics?.cashChange.toFixed(1)}%
-                    </div>
-                    <div className="text-xs text-muted-foreground font-medium mt-1">Cash Δ</div>
-                  </div>
-                )}
-
-                {calculatedMetrics?.mealsChange !== undefined && (
-                  <div className="text-center p-3 bg-muted/40 rounded-lg border border-border">
-                    <div className={cn("text-2xl font-bold transition-all duration-200",
-                      calculatedMetrics?.mealsChange > 0 ? "text-success" : "text-danger"
-                    )}>
-                      {calculatedMetrics?.mealsChange > 0 ? '+' : ''}{calculatedMetrics?.mealsChange.toFixed(1)}%
-                    </div>
-                    <div className="text-xs text-muted-foreground font-medium mt-1">Meals Δ</div>
-                  </div>
-                )}
-              </div>
-            </section>
-
-            {/* Economic Variables Controls */}
-            <section>
-              <div className="mb-6">
-                <h3 className="text-xl font-bold mb-2">Economic Variables</h3>
-                <p className="text-sm text-muted-foreground">
-                  Adjust the 11 variables below to model different economic scenarios and their impact on operations
-                </p>
-              </div>
-
-              <LazyComponentWrapper>
-                <LazyScenarioAnalysis
-                  factors={scenarioFactors}
-                  onFactorChange={updateScenario}
-                />
-              </LazyComponentWrapper>
-            </section>
           </div>
         );
       default:
@@ -635,32 +632,17 @@ const ExecutiveDashboard = memo(() => {
     coverage: 27
   };
 
-  const keyboardShortcuts = [
-    { key: '1', meta: true, description: 'Executive Dashboard', action: () => handleSectionChange('executive') },
-    { key: '2', meta: true, description: 'Financial Analytics', action: () => handleSectionChange('financial') },
-    { key: '3', meta: true, description: 'Operations', action: () => handleSectionChange('operational') },
-    { key: '4', meta: true, description: 'Programs', action: () => handleSectionChange('programs') },
-    { key: '5', meta: true, description: 'Stakeholders', action: () => handleSectionChange('stakeholders') },
-    { key: '6', meta: true, description: 'Scenarios', action: () => handleSectionChange('scenarios') }
-  ];
-
-  useKeyboardShortcuts(keyboardShortcuts);
-
-  const exportData = prepareMetricsForExport(calculatedMetrics || baseMetrics);
 
   return (
-    <>
-      <DashboardLayout
-        metrics={dashboardMetrics}
-        currentSection={currentSection}
-        onSectionChange={handleSectionChange}
-        sidebar={
-          <ReportNavigation
-            currentSection={currentSection}
-            onSectionChange={handleSectionChange}
-          />
-        }
-      >
+    <DashboardLayout 
+      metrics={dashboardMetrics}
+      sidebar={
+        <ReportNavigation 
+          currentSection={currentSection}
+          onSectionChange={handleSectionChange}
+        />
+      }
+    >
       
       {isLoading ? (
         <PageLoadingSkeleton />
@@ -680,12 +662,7 @@ const ExecutiveDashboard = memo(() => {
         isOpen={showModelModal}
         onClose={() => setShowModelModal(false)}
       />
-      </DashboardLayout>
-      <MobileBottomNav
-        currentSection={currentSection}
-        onSectionChange={handleSectionChange}
-      />
-    </>
+    </DashboardLayout>
   );
 });
 

@@ -4,12 +4,19 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { MetricDetailModal } from './MetricDetailModal';
-import { TrendingUp, TrendingDown, DollarSign, TriangleAlert as AlertTriangle, ChartPie as PieChart, ChartBar as BarChart3, Target, Zap } from 'lucide-react';
+import { 
+  TrendingUp, 
+  TrendingDown, 
+  DollarSign, 
+  AlertTriangle,
+  PieChart,
+  BarChart3,
+  Target,
+  Zap
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { formatCurrency, formatPercentage } from '@/lib/formatters';
 import { Metric } from './ExecutiveDashboard';
-import { RiskThermometer } from './RiskThermometer';
-import { MultiplierEffect } from './MultiplierEffect';
 
 const AdvancedFinancialAnalytics = memo(() => {
   const [selectedMetric, setSelectedMetric] = useState<Metric | null>(null);
@@ -198,8 +205,8 @@ const AdvancedFinancialAnalytics = memo(() => {
           </p>
         </div>
         <div className="flex flex-col sm:items-end gap-2">
-          <Badge
-            variant="outline"
+          <Badge 
+            variant="outline" 
             className="text-primary border-primary bg-primary/5 px-4 py-2 text-sm font-medium rounded-lg"
           >
             <div className="flex items-center gap-2">
@@ -210,34 +217,6 @@ const AdvancedFinancialAnalytics = memo(() => {
           <span className="text-xs text-muted-foreground">Updated every 15 minutes</span>
         </div>
       </div>
-
-      {/* Context Banner - How Finance Enables Operations */}
-      <Card className="executive-card bg-gradient-to-r from-primary/5 to-success/5 border-primary/20">
-        <CardContent className="p-6">
-          <div className="flex items-start gap-4">
-            <div className="p-3 bg-primary/10 rounded-lg">
-              <Target className="w-6 h-6 text-primary" />
-            </div>
-            <div className="flex-1">
-              <h3 className="text-lg font-semibold mb-2">Financial Performance Impact</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-                <div>
-                  <div className="text-muted-foreground">Current Revenue enables:</div>
-                  <div className="font-bold text-success">367.5M meals annually</div>
-                </div>
-                <div>
-                  <div className="text-muted-foreground">Cost efficiency achieves:</div>
-                  <div className="font-bold text-primary">EGP 6.36 per meal</div>
-                </div>
-                <div>
-                  <div className="text-muted-foreground">Financial health supports:</div>
-                  <div className="font-bold text-warning">4.96M people served</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
 
       {/* Financial Health Overview */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -316,32 +295,8 @@ const AdvancedFinancialAnalytics = memo(() => {
         </Card>
       </div>
 
-      {/* Matrix-Enhanced Visualizations */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Multiplier Effect Visualization */}
-        <MultiplierEffect
-          initialAmount={1}
-          fundraisingROI={financialData.fundraisingEfficiency}
-          programRatio={financialData.programRatio / 100}
-          costPerMeal={financialData.costPerMeal}
-        />
-
-        {/* Risk Thermometer */}
-        <RiskThermometer
-          concentrationPercent={ratios.revenueConcentrationRisk}
-          title="Donor Concentration Risk"
-          description="Top 1% of donors provide 99% of funding"
-          recommendations={[
-            'Launch mass donor acquisition campaign targeting middle-class segment',
-            'Implement monthly giving program to build recurring revenue base',
-            'Diversify into corporate partnerships and government grants',
-            'Develop peer-to-peer fundraising platform',
-          ]}
-        />
-      </div>
-
       {/* Revenue Stream Analysis */}
-      <Card className="matrix-card">
+      <Card className="executive-card">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <PieChart className="w-6 h-6 text-primary" />

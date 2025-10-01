@@ -1,29 +1,27 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-import {
-  LineChart,
-  Line,
-  Area,
-  AreaChart,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  ResponsiveContainer,
-  ReferenceLine,
+import { 
+  LineChart, 
+  Line, 
+  Area, 
+  AreaChart, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  ResponsiveContainer, 
+  ReferenceLine, 
   Tooltip as RechartsTooltip,
   Dot,
   ComposedChart,
   ReferenceArea
 } from 'recharts';
-import { TrendingUp, Users, Target, Calendar, Info, Maximize2, Sparkles } from 'lucide-react';
+import { TrendingUp, Users, Target, Calendar, Info, Maximize2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { formatNumber, formatSimpleNumber } from '@/lib/formatters';
 import { createChartTooltip } from '@/components/ui/chart-tooltip';
-import { MatrixCounter, ParticleExplosion, GlitchText } from './MatrixEffects';
-import { useInView, useReducedMotion } from '@/hooks/useMatrixEffects';
 
 interface GrowthDataPoint {
   year: number;
@@ -44,20 +42,6 @@ export function GrowthTrajectoryChart({ className, compact = false }: GrowthTraj
   const [showProjections, setShowProjections] = useState(true);
   const [mousePosition, setMousePosition] = useState<{ x: number; y: number } | null>(null);
   const [hoveredData, setHoveredData] = useState<any>(null);
-  const [showCelebration, setShowCelebration] = useState(false);
-  const [pathLength, setPathLength] = useState(0);
-
-  // Animation and visibility hooks
-  const { ref, isInView, hasBeenInView } = useInView({ threshold: 0.3 });
-  const prefersReducedMotion = useReducedMotion();
-
-  // Trigger celebration when chart becomes visible
-  useEffect(() => {
-    if (isInView && !hasBeenInView) {
-      setTimeout(() => setShowCelebration(true), 1500);
-      setTimeout(() => setShowCelebration(false), 3000);
-    }
-  }, [isInView, hasBeenInView]);
 
   // Historical and projected data based on EFB's actual growth trajectory
   const growthData: GrowthDataPoint[] = useMemo(() => [
@@ -186,56 +170,31 @@ export function GrowthTrajectoryChart({ className, compact = false }: GrowthTraj
   };
   
   return (
-    <Card ref={ref as any} className={cn("matrix-card overflow-hidden", className)}>
-      {/* Particle celebration effect */}
-      <ParticleExplosion
-        trigger={showCelebration}
-        x={window.innerWidth / 2}
-        y={window.innerHeight / 2}
-        count={50}
-        colors={['#5FB85A', '#39FF14', '#CCFF00']}
-      />
-
+    <Card className={cn("executive-card overflow-hidden", className)}>
       <CardHeader className="pb-4">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-primary/10 rounded-lg matrix-glow">
+            <div className="p-2 bg-primary/10 rounded-lg">
               <TrendingUp className="w-6 h-6 text-primary" />
             </div>
             <div className="min-w-0 flex-1">
-              <CardTitle className="text-xl">
-                <GlitchText triggerOnHover>
-                  Growth Trajectory Analysis
-                </GlitchText>
-              </CardTitle>
+              <CardTitle className="text-xl">Growth Trajectory Analysis</CardTitle>
               <p className="text-sm text-muted-foreground">
-                Five-year operational expansion with {!prefersReducedMotion && 'animated'} insights
+                Five-year operational expansion
               </p>
             </div>
           </div>
-
+          
           <div className="flex items-center gap-3 flex-shrink-0">
             <div className="text-right">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
                 <Badge variant="outline" className="text-primary border-primary">
-                  <Sparkles className="w-3 h-3 mr-1" />
                   +{currentCAGR.toFixed(0)}% CAGR
                 </Badge>
               </div>
-              <div className="text-2xl font-bold mt-1">
-                {isInView ? (
-                  <MatrixCounter
-                    value={selectedMetric === 'meals' ? 367.5 : 4.96}
-                    suffix={selectedMetric === 'meals' ? 'M' : 'M'}
-                    glowColor="success"
-                    duration={2000}
-                  />
-                ) : (
-                  <span className="text-primary">
-                    {selectedMetric === 'meals' ? '367.5M' : '4.96M'}
-                  </span>
-                )}
+              <div className="text-2xl font-bold text-primary mt-1">
+                {selectedMetric === 'meals' ? '367.5M' : '4.96M'}
               </div>
               <div className="text-xs text-muted-foreground">
                 FY2024 {selectedMetric === 'meals' ? 'Total' : 'Annual'}

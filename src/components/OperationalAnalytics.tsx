@@ -2,7 +2,19 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Truck, MapPin, Clock, Users, Package, Target, TrendingUp, TriangleAlert as AlertTriangle, CircleCheck as CheckCircle2, Calendar, Activity } from 'lucide-react';
+import { 
+  Truck, 
+  MapPin, 
+  Clock, 
+  Users, 
+  Package, 
+  Target,
+  TrendingUp,
+  AlertTriangle,
+  CheckCircle2,
+  Calendar,
+  Activity
+} from 'lucide-react';
 import { MetricDetailModal } from './MetricDetailModal';
 import { cn } from '@/lib/utils';
 
@@ -130,8 +142,8 @@ export function OperationalAnalytics() {
           </p>
         </div>
         <div className="flex flex-col sm:items-end gap-2">
-          <Badge
-            variant="outline"
+          <Badge 
+            variant="outline" 
             className="text-success border-success bg-success/5 px-4 py-2 text-sm font-medium rounded-lg"
           >
             <div className="flex items-center gap-2">
@@ -142,34 +154,6 @@ export function OperationalAnalytics() {
           <span className="text-xs text-muted-foreground">Updated every 30 seconds</span>
         </div>
       </div>
-
-      {/* Context Banner - Operations Enable Programs */}
-      <Card className="executive-card bg-gradient-to-r from-success/5 to-warning/5 border-success/20">
-        <CardContent className="p-6">
-          <div className="flex items-start gap-4">
-            <div className="p-3 bg-success/10 rounded-lg">
-              <Truck className="w-6 h-6 text-success" />
-            </div>
-            <div className="flex-1">
-              <h3 className="text-lg font-semibold mb-2">Operational Performance Impact</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-                <div>
-                  <div className="text-muted-foreground">94.7% distribution efficiency enables:</div>
-                  <div className="font-bold text-success">367.5M meals delivered annually</div>
-                </div>
-                <div>
-                  <div className="text-muted-foreground">Network of 5,000 partners supports:</div>
-                  <div className="font-bold text-primary">Protection, Prevention, Empowerment programs</div>
-                </div>
-                <div>
-                  <div className="text-muted-foreground">Budget allocated for operations:</div>
-                  <div className="font-bold text-warning">EGP 1.94B program costs</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
 
       {/* Key Operational Metrics */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

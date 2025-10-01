@@ -99,10 +99,9 @@ LIMIT
 export async function fetchDonations(): Promise<DonationRecord[]> {
   try {
     console.log('Fetching donations via backend proxy...');
-
+    
     // Use the Supabase edge function proxy instead of direct Metabase call
-    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://0ec90b57d6e95fcbda19832f.supabase.co';
-    const response = await fetch(`${supabaseUrl}/functions/v1/donations-proxy`, {
+    const response = await fetch(`https://78847321-0b8b-49c7-aeb1-aaf43b5b5ddf.supabase.co/functions/v1/donations-proxy`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
