@@ -4,16 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { MetricDetailModal } from './MetricDetailModal';
-import { 
-  TrendingUp, 
-  TrendingDown, 
-  DollarSign, 
-  AlertTriangle,
-  PieChart,
-  BarChart3,
-  Target,
-  Zap
-} from 'lucide-react';
+import { TrendingUp, TrendingDown, DollarSign, TriangleAlert as AlertTriangle, ChartPie as PieChart, ChartBar as BarChart3, Target, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { formatCurrency, formatPercentage } from '@/lib/formatters';
 import { Metric } from './ExecutiveDashboard';

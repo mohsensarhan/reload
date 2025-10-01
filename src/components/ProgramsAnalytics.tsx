@@ -3,18 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
-  Shield, 
-  GraduationCap, 
-  Heart, 
-  Users, 
-  Target,
-  TrendingUp,
-  Calendar,
-  Award,
-  CheckCircle2,
-  AlertCircle
-} from 'lucide-react';
+import { Shield, GraduationCap, Heart, Users, Target, TrendingUp, Calendar, Award, CircleCheck as CheckCircle2, CircleAlert as AlertCircle } from 'lucide-react';
 import { MetricDetailModal } from './MetricDetailModal';
 import { cn } from '@/lib/utils';
 
