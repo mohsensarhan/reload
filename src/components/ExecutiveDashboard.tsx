@@ -24,7 +24,7 @@ import { createExecutiveMetrics } from '@/data/executiveMetrics';
 import { formatSimpleNumber, formatPercentage, formatCurrency, formatNumber } from '@/lib/formatters';
 import { cn } from '@/lib/utils';
 import { GrowthTrajectoryChart } from './GrowthTrajectoryChart';
-import { 
+import {
   LazyAdvancedFinancialAnalytics,
   LazyOperationalAnalytics,
   LazyProgramsAnalytics,
@@ -34,6 +34,14 @@ import {
 } from './LazyComponents';
 import { GlobalSignalsSection } from './GlobalSignalsSection';
 import { PageGrid } from '@/layout/PageGrid';
+import { ExecutiveSummary } from './ExecutiveSummary';
+import { MobileBottomNav } from './MobileBottomNav';
+import { ExportMenu } from './ExportMenu';
+import { TimeRangeSelector } from './TimeRangeSelector';
+import { useUserPreferences } from '@/hooks/useUserPreferences';
+import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
+import { DateRange } from 'react-day-picker';
+import { prepareMetricsForExport } from '@/lib/exportUtils';
 
 export interface Metric {
   title: string;
@@ -72,14 +80,15 @@ const baseMetrics: DashboardMetrics = {
 };
 
 const ExecutiveDashboard = memo(() => {
-  // Get initial section from URL or default to 'executive'
   const getInitialSection = () => {
     const hash = window.location.hash.replace('#', '');
     const validSections = ['executive', 'financial', 'operational', 'programs', 'stakeholders', 'scenarios'];
     return validSections.includes(hash) ? hash : 'executive';
   };
-  
+
   const [currentSection, setCurrentSection] = useState(getInitialSection);
+  const [dateRange, setDateRange] = React.useState<DateRange | undefined>();
+  const { preferences } = useUserPreferences();
   const [selectedMetric, setSelectedMetric] = useState<Metric | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showModelModal, setShowModelModal] = useState(false);
@@ -226,6 +235,23 @@ const ExecutiveDashboard = memo(() => {
       case 'executive':
         return (
           <div className="space-y-8">
+            {/* Executive Summary with AI Insights */}
+            <section className="mb-8">
+              <ExecutiveSummary metrics={calculatedMetrics || baseMetrics} />
+            </section>
+
+            {/* Toolbar with filters and export */}
+            <section className="mb-6">
+              <div className="flex items-center justify-between gap-4 flex-wrap">
+                <TimeRangeSelector
+                  value={dateRange}
+                  onChange={setDateRange}
+                  className="w-auto"
+                />
+                <ExportMenu data={exportData} />
+              </div>
+            </section>
+
             {/* 1. STRATEGIC OVERVIEW - Key Performance Indicators */}
             <section>
               <div className="mb-6">
@@ -632,17 +658,32 @@ const ExecutiveDashboard = memo(() => {
     coverage: 27
   };
 
+  const keyboardShortcuts = [
+    { key: '1', meta: true, description: 'Executive Dashboard', action: () => handleSectionChange('executive') },
+    { key: '2', meta: true, description: 'Financial Analytics', action: () => handleSectionChange('financial') },
+    { key: '3', meta: true, description: 'Operations', action: () => handleSectionChange('operational') },
+    { key: '4', meta: true, description: 'Programs', action: () => handleSectionChange('programs') },
+    { key: '5', meta: true, description: 'Stakeholders', action: () => handleSectionChange('stakeholders') },
+    { key: '6', meta: true, description: 'Scenarios', action: () => handleSectionChange('scenarios') }
+  ];
+
+  useKeyboardShortcuts(keyboardShortcuts);
+
+  const exportData = prepareMetricsForExport(calculatedMetrics || baseMetrics);
 
   return (
-    <DashboardLayout 
-      metrics={dashboardMetrics}
-      sidebar={
-        <ReportNavigation 
-          currentSection={currentSection}
-          onSectionChange={handleSectionChange}
-        />
-      }
-    >
+    <>
+      <DashboardLayout
+        metrics={dashboardMetrics}
+        currentSection={currentSection}
+        onSectionChange={handleSectionChange}
+        sidebar={
+          <ReportNavigation
+            currentSection={currentSection}
+            onSectionChange={handleSectionChange}
+          />
+        }
+      >
       
       {isLoading ? (
         <PageLoadingSkeleton />
@@ -662,7 +703,12 @@ const ExecutiveDashboard = memo(() => {
         isOpen={showModelModal}
         onClose={() => setShowModelModal(false)}
       />
-    </DashboardLayout>
+      </DashboardLayout>
+      <MobileBottomNav
+        currentSection={currentSection}
+        onSectionChange={handleSectionChange}
+      />
+    </>
   );
 });
 
