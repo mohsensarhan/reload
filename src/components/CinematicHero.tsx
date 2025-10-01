@@ -120,19 +120,22 @@ export function CinematicHero({ className }: CinematicHeroProps) {
 
   return (
     <div className={cn("relative overflow-hidden", className)}>
-      {/* Ambient background glow */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-success/5 pointer-events-none" />
+      {/* Matrix-style background glow */}
+      <div className="absolute inset-0 bg-gradient-to-br from-success/8 via-transparent to-success/4 pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-success/5 via-transparent to-transparent pointer-events-none" />
 
       {/* Hero Header */}
       <div className="relative z-10 mb-8 animate-fade-in-up">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-4">
-            <div className="p-3 rounded-xl bg-primary/10 border border-primary/20">
-              <Activity className="w-8 h-8 text-primary" />
+            <div className="p-3 rounded-xl bg-success/15 border border-success/30 shadow-glow-success">
+              <Activity className="w-8 h-8 text-success" />
             </div>
             <div>
-              <h1 className="text-4xl md:text-5xl font-bold tracking-tight bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
-                Live Operations Status
+              <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
+                <span className="bg-gradient-to-r from-success-glow via-success to-success-glow bg-clip-text text-transparent">
+                  Live Operations Status
+                </span>
               </h1>
               <p className="text-muted-foreground mt-1 text-lg">
                 Real-time performance metrics across all operations
@@ -222,16 +225,16 @@ export function CinematicHero({ className }: CinematicHeroProps) {
         ))}
       </div>
 
-      {/* Bottom Context Banner */}
-      <Card className="mt-8 bg-gradient-to-r from-card via-card-elevated to-card border border-border-bright/50 overflow-hidden animate-fade-in-up animate-stagger-4">
+      {/* Bottom Context Banner - Matrix Style */}
+      <Card className="mt-8 bg-gradient-to-r from-card via-card-elevated to-card border border-success/20 overflow-hidden animate-fade-in-up animate-stagger-4 shadow-glow-success">
         <div className="p-6 relative">
-          {/* Glow effect */}
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-success/5 pointer-events-none" />
+          {/* Matrix green glow effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-success/8 via-success/4 to-success/8 pointer-events-none" />
 
           <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">
             <div>
               <div className="text-sm text-muted-foreground mb-1">Current fiscal year performance</div>
-              <div className="text-2xl font-bold text-primary">FY2024 Q4</div>
+              <div className="text-2xl font-bold text-success">FY2024 Q4</div>
             </div>
             <div>
               <div className="text-sm text-muted-foreground mb-1">System health status</div>
@@ -245,7 +248,7 @@ export function CinematicHero({ className }: CinematicHeroProps) {
             </div>
             <div>
               <div className="text-sm text-muted-foreground mb-1">Data freshness</div>
-              <div className="text-2xl font-bold text-warning">Live • 2s latency</div>
+              <div className="text-2xl font-bold text-success-glow">Live • 2s latency</div>
             </div>
           </div>
         </div>

@@ -19,61 +19,61 @@
     --sab: env(safe-area-inset-bottom, 0px);
     --sab-offset: calc(env(safe-area-inset-bottom, 0px) + 64px);
 
-    /* Premium Dark Theme - Charcoal to Deep Navy */
-    --background: 220 13% 6%; /* Deep charcoal with blue undertone */
+    /* Matrix Theme - Pure Black with Green Accents */
+    --background: 0 0% 3%; /* Pure deep black */
     --foreground: 0 0% 98%;
-    --background-secondary: 220 13% 4%; /* Even darker for depth */
+    --background-secondary: 0 0% 2%; /* Even darker for depth */
 
     /* Card System with Glass Morphism */
-    --card: 220 13% 8%; /* Slightly lighter than background */
+    --card: 140 10% 6%; /* Very dark with subtle green tint */
     --card-foreground: 0 0% 98%;
-    --card-border: 220 13% 14%; /* Subtle border */
-    --card-elevated: 220 13% 10%; /* For hover states */
+    --card-border: 142 20% 12%; /* Green-tinted border */
+    --card-elevated: 140 15% 8%; /* For hover states */
 
-    /* Premium Color Palette - Apple × Palantir */
-    --primary: 189 95% 55%; /* Electric Cyan */
-    --primary-foreground: 220 13% 6%;
-    --primary-glow: 189 95% 65%;
-    --primary-dim: 189 95% 45%;
+    /* Matrix Green Palette - EFB Brand */
+    --primary: 142 69% 58%; /* EFB Matrix Green #5FB85A */
+    --primary-foreground: 0 0% 5%;
+    --primary-glow: 142 76% 68%; /* Brighter glow */
+    --primary-dim: 142 60% 45%; /* Dimmer version */
 
-    /* Financial Health Colors - Vibrant and Clear */
-    --success: 142 76% 56%; /* Emerald green */
-    --success-glow: 142 76% 66%;
-    --warning: 38 92% 58%; /* Amber */
-    --warning-glow: 38 92% 68%;
-    --danger: 0 84% 60%; /* Crimson red */
-    --danger-glow: 0 84% 70%;
+    /* Financial Health Colors - Matrix-inspired */
+    --success: 142 76% 58%; /* Bright Matrix green */
+    --success-glow: 142 80% 70%;
+    --warning: 38 92% 60%; /* Amber for warnings */
+    --warning-glow: 38 95% 72%;
+    --danger: 0 84% 62%; /* Red for critical */
+    --danger-glow: 0 88% 74%;
     --neutral: 0 0% 98%; /* Pure white for data */
 
     /* UI Elements */
-    --secondary: 220 13% 12%;
+    --secondary: 140 8% 10%;
     --secondary-foreground: 0 0% 90%;
-    --muted: 220 13% 10%;
-    --muted-foreground: 220 9% 65%;
-    --accent: 189 95% 55%;
-    --accent-foreground: 220 13% 6%;
+    --muted: 140 6% 8%;
+    --muted-foreground: 142 10% 60%;
+    --accent: 142 69% 58%;
+    --accent-foreground: 0 0% 5%;
 
     /* Borders & Inputs */
-    --border: 220 13% 16%;
-    --border-bright: 220 13% 24%;
-    --input: 220 13% 12%;
-    --ring: 189 95% 55%;
+    --border: 142 15% 14%;
+    --border-bright: 142 25% 22%;
+    --input: 140 8% 10%;
+    --ring: 142 69% 58%;
 
-    /* Premium Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(189 95% 55%), hsl(189 95% 65%));
-    --gradient-success: linear-gradient(135deg, hsl(142 76% 56%), hsl(142 76% 66%));
-    --gradient-warning: linear-gradient(135deg, hsl(38 92% 58%), hsl(38 92% 68%));
-    --gradient-danger: linear-gradient(135deg, hsl(0 84% 60%), hsl(0 84% 70%));
-    --gradient-dark: linear-gradient(135deg, hsl(220 13% 8%), hsl(220 13% 4%));
-    --gradient-glow: radial-gradient(circle at 50% 0%, hsl(189 95% 55% / 0.15), transparent 70%);
+    /* Matrix Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(142 69% 58%), hsl(142 76% 68%));
+    --gradient-success: linear-gradient(135deg, hsl(142 76% 58%), hsl(142 80% 70%));
+    --gradient-warning: linear-gradient(135deg, hsl(38 92% 60%), hsl(38 95% 72%));
+    --gradient-danger: linear-gradient(135deg, hsl(0 84% 62%), hsl(0 88% 74%));
+    --gradient-dark: linear-gradient(135deg, hsl(140 10% 6%), hsl(0 0% 2%));
+    --gradient-glow: radial-gradient(circle at 50% 0%, hsl(142 69% 58% / 0.12), transparent 70%);
 
-    /* Premium Shadows with Depth */
-    --shadow-executive: 0 32px 64px -12px hsl(220 13% 0% / 0.7);
-    --shadow-card: 0 8px 32px -8px hsl(220 13% 0% / 0.5);
-    --shadow-glow-primary: 0 0 40px hsl(189 95% 55% / 0.4);
-    --shadow-glow-success: 0 0 40px hsl(142 76% 56% / 0.4);
-    --shadow-glow-warning: 0 0 40px hsl(38 92% 58% / 0.4);
-    --shadow-glow-danger: 0 0 40px hsl(0 84% 60% / 0.4);
+    /* Matrix Shadows with Green Glow */
+    --shadow-executive: 0 32px 64px -12px hsl(0 0% 0% / 0.8);
+    --shadow-card: 0 8px 32px -8px hsl(0 0% 0% / 0.6);
+    --shadow-glow-primary: 0 0 40px hsl(142 69% 58% / 0.35);
+    --shadow-glow-success: 0 0 40px hsl(142 76% 58% / 0.35);
+    --shadow-glow-warning: 0 0 40px hsl(38 92% 60% / 0.35);
+    --shadow-glow-danger: 0 0 40px hsl(0 84% 62% / 0.35);
 
     /* Animation Timings - Smooth and Premium */
     --timing-fast: 150ms;
@@ -333,15 +333,15 @@
     animation: pulse-glow 2s ease-in-out infinite;
   }
 
-  /* Cinematic Number Display */
+  /* Cinematic Number Display - Matrix Style */
   .metric-hero {
     @apply font-bold tabular-nums tracking-tight;
     font-size: clamp(2rem, 5vw, 4rem);
-    background: linear-gradient(135deg, hsl(var(--foreground)), hsl(var(--primary)));
+    background: linear-gradient(135deg, hsl(var(--success-glow)), hsl(var(--primary)));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-shadow: 0 0 60px hsl(var(--primary) / 0.3);
+    filter: drop-shadow(0 0 20px hsl(var(--primary) / 0.4));
   }
 
   /* Interactive Hover Glow */
