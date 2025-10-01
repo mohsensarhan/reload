@@ -2,19 +2,7 @@ import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import {
-  BarChart3,
-  Users,
-  DollarSign,
-  Settings,
-  MapPin,
-  TrendingUp,
-  Target,
-  Globe,
-  Zap,
-  Award,
-  BookOpen
-} from 'lucide-react';
+import { ChartBar as BarChart3, Users, DollarSign, Settings, MapPin, TrendingUp, Target, Globe, Zap, Award, BookOpen } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ReportSection {

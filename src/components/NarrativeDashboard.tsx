@@ -1,17 +1,5 @@
 import React, { useEffect } from 'react';
-import {
-  AlertTriangle,
-  TrendingUp,
-  Users,
-  Zap,
-  Rocket,
-  Heart,
-  Package,
-  DollarSign,
-  Globe,
-  Shield,
-  Target,
-} from 'lucide-react';
+import { TriangleAlert as AlertTriangle, TrendingUp, Users, Zap, Rocket, Heart, Package, DollarSign, Globe, Shield, Target } from 'lucide-react';
 import { NarrativeSection, NarrativeMetric } from './NarrativeSection';
 import { ANNUAL_REPORT_FY2024_25 } from '@/data/annualReportData';
 import { formatNumber, formatCurrency, formatPercentage } from '@/lib/formatters';

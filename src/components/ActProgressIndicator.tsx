@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { AlertTriangle, Package, Users, Zap, Rocket, ChevronDown } from 'lucide-react';
+import { TriangleAlert as AlertTriangle, Package, Users, Zap, Rocket, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface Act {
