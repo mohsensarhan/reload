@@ -2,18 +2,7 @@ import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { 
-  BarChart3, 
-  Users, 
-  DollarSign, 
-  Settings, 
-  MapPin, 
-  TrendingUp,
-  Target,
-  Globe,
-  Zap,
-  Award
-} from 'lucide-react';
+import { ChartBar as BarChart3, Users, DollarSign, Settings, MapPin, TrendingUp, Target, Globe, Zap, Award, BookOpen } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ReportSection {
@@ -33,6 +22,18 @@ interface ReportNavigationProps {
 
 export function ReportNavigation({ currentSection, onSectionChange, onMobileMenuClose }: ReportNavigationProps) {
   const sections: ReportSection[] = [
+    {
+      id: 'narrative',
+      title: 'Narrative Journey',
+      description: '5-Act storytelling experience through EFB\'s impact',
+      icon: <BookOpen className="w-5 h-5" />,
+      status: 'completed',
+      keyMetrics: [
+        { label: 'Crisis → Future', value: '5 Acts' },
+        { label: 'Impact Stories', value: '4.96M' },
+        { label: 'Transformation', value: '38%↓' }
+      ]
+    },
     {
       id: 'executive',
       title: 'Executive Dashboard',

@@ -8,6 +8,8 @@ import { TrendingUp, TrendingDown, DollarSign, TriangleAlert as AlertTriangle, C
 import { cn } from '@/lib/utils';
 import { formatCurrency, formatPercentage } from '@/lib/formatters';
 import { Metric } from './ExecutiveDashboard';
+import { RiskThermometer } from './RiskThermometer';
+import { MultiplierEffect } from './MultiplierEffect';
 
 const AdvancedFinancialAnalytics = memo(() => {
   const [selectedMetric, setSelectedMetric] = useState<Metric | null>(null);
@@ -314,8 +316,32 @@ const AdvancedFinancialAnalytics = memo(() => {
         </Card>
       </div>
 
+      {/* Matrix-Enhanced Visualizations */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Multiplier Effect Visualization */}
+        <MultiplierEffect
+          initialAmount={1}
+          fundraisingROI={financialData.fundraisingEfficiency}
+          programRatio={financialData.programRatio / 100}
+          costPerMeal={financialData.costPerMeal}
+        />
+
+        {/* Risk Thermometer */}
+        <RiskThermometer
+          concentrationPercent={ratios.revenueConcentrationRisk}
+          title="Donor Concentration Risk"
+          description="Top 1% of donors provide 99% of funding"
+          recommendations={[
+            'Launch mass donor acquisition campaign targeting middle-class segment',
+            'Implement monthly giving program to build recurring revenue base',
+            'Diversify into corporate partnerships and government grants',
+            'Develop peer-to-peer fundraising platform',
+          ]}
+        />
+      </div>
+
       {/* Revenue Stream Analysis */}
-      <Card className="executive-card">
+      <Card className="matrix-card">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <PieChart className="w-6 h-6 text-primary" />
