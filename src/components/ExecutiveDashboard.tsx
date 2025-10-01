@@ -42,6 +42,11 @@ import { useUserPreferences } from '@/hooks/useUserPreferences';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { DateRange } from 'react-day-picker';
 import { prepareMetricsForExport } from '@/lib/exportUtils';
+import { DigitalTransformationChart } from './DigitalTransformationChart';
+import { StuntingReductionChart } from './StuntingReductionChart';
+import { NarrativeDashboard } from './NarrativeDashboard';
+import { MatrixRain } from './MatrixRain';
+import { ActProgressIndicator } from './ActProgressIndicator';
 
 export interface Metric {
   title: string;
@@ -82,8 +87,8 @@ const baseMetrics: DashboardMetrics = {
 const ExecutiveDashboard = memo(() => {
   const getInitialSection = () => {
     const hash = window.location.hash.replace('#', '');
-    const validSections = ['executive', 'financial', 'operational', 'programs', 'stakeholders', 'scenarios'];
-    return validSections.includes(hash) ? hash : 'executive';
+    const validSections = ['narrative', 'executive', 'financial', 'operational', 'programs', 'stakeholders', 'scenarios'];
+    return validSections.includes(hash) ? hash : 'narrative';
   };
 
   const [currentSection, setCurrentSection] = useState(getInitialSection);
@@ -232,6 +237,16 @@ const ExecutiveDashboard = memo(() => {
 
   const renderCurrentSection = () => {
     switch (currentSection) {
+      case 'narrative':
+        return (
+          <div className="relative">
+            <MatrixRain opacity={0.08} speed={1.2} fontSize={14} />
+            <ActProgressIndicator />
+            <div className="relative z-10">
+              <NarrativeDashboard />
+            </div>
+          </div>
+        );
       case 'executive':
         return (
           <div className="space-y-8">
