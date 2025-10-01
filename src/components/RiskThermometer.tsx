@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { AlertTriangle, TrendingDown, Shield, Info } from 'lucide-react';
+import { TriangleAlert as AlertTriangle, TrendingDown, Shield, Info } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useInView, useReducedMotion } from '@/hooks/useMatrixEffects';
 import { GlitchText, PulsingGlow } from './MatrixEffects';
