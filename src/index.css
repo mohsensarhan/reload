@@ -13,58 +13,76 @@
     --rowHpx: 200px;
     --gappx: 16px;
     --rows: 4;
-    
+
     /* Safe area variables for mobile */
     --sat: env(safe-area-inset-top, 0px);
     --sab: env(safe-area-inset-bottom, 0px);
     --sab-offset: calc(env(safe-area-inset-bottom, 0px) + 64px);
 
-    /* Dark Executive Theme */
-    --background: 0 0% 4%;
+    /* Premium Dark Theme - Charcoal to Deep Navy */
+    --background: 220 13% 6%; /* Deep charcoal with blue undertone */
     --foreground: 0 0% 98%;
+    --background-secondary: 220 13% 4%; /* Even darker for depth */
 
-    /* Card System */
-    --card: 0 0% 6%;
+    /* Card System with Glass Morphism */
+    --card: 220 13% 8%; /* Slightly lighter than background */
     --card-foreground: 0 0% 98%;
-    --card-border: 0 0% 12%;
+    --card-border: 220 13% 14%; /* Subtle border */
+    --card-elevated: 220 13% 10%; /* For hover states */
 
-    /* Executive Green Theme */
-    --primary: 142 69% 58%; /* #5FB85A - EFB Green */
-    --primary-foreground: 0 0% 98%;
-    --primary-glow: 142 69% 65%;
+    /* Premium Color Palette - Apple × Palantir */
+    --primary: 189 95% 55%; /* Electric Cyan */
+    --primary-foreground: 220 13% 6%;
+    --primary-glow: 189 95% 65%;
+    --primary-dim: 189 95% 45%;
 
-    /* Financial Health Colors */
-    --success: 142 69% 58%; /* Green for positive metrics */
-    --warning: 38 100% 50%; /* Orange for efficiency metrics */
-    --danger: 0 84% 60%; /* Red for alerts/risks */
-    --neutral: 0 0% 98%; /* White for neutral data */
+    /* Financial Health Colors - Vibrant and Clear */
+    --success: 142 76% 56%; /* Emerald green */
+    --success-glow: 142 76% 66%;
+    --warning: 38 92% 58%; /* Amber */
+    --warning-glow: 38 92% 68%;
+    --danger: 0 84% 60%; /* Crimson red */
+    --danger-glow: 0 84% 70%;
+    --neutral: 0 0% 98%; /* Pure white for data */
 
     /* UI Elements */
-    --secondary: 0 0% 10%;
+    --secondary: 220 13% 12%;
     --secondary-foreground: 0 0% 90%;
-    --muted: 0 0% 8%;
-    --muted-foreground: 0 0% 65%;
-    --accent: 0 0% 12%;
-    --accent-foreground: 0 0% 98%;
+    --muted: 220 13% 10%;
+    --muted-foreground: 220 9% 65%;
+    --accent: 189 95% 55%;
+    --accent-foreground: 220 13% 6%;
 
     /* Borders & Inputs */
-    --border: 0 0% 15%;
-    --input: 0 0% 12%;
-    --ring: 142 69% 58%;
+    --border: 220 13% 16%;
+    --border-bright: 220 13% 24%;
+    --input: 220 13% 12%;
+    --ring: 189 95% 55%;
 
-    /* Executive Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
-    --gradient-success: linear-gradient(135deg, hsl(var(--success)), hsl(142 69% 65%));
-    --gradient-warning: linear-gradient(135deg, hsl(var(--warning)), hsl(45 100% 60%));
-    --gradient-danger: linear-gradient(135deg, hsl(var(--danger)), hsl(0 84% 70%));
-    --gradient-dark: linear-gradient(135deg, hsl(var(--card)), hsl(0 0% 8%));
+    /* Premium Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(189 95% 55%), hsl(189 95% 65%));
+    --gradient-success: linear-gradient(135deg, hsl(142 76% 56%), hsl(142 76% 66%));
+    --gradient-warning: linear-gradient(135deg, hsl(38 92% 58%), hsl(38 92% 68%));
+    --gradient-danger: linear-gradient(135deg, hsl(0 84% 60%), hsl(0 84% 70%));
+    --gradient-dark: linear-gradient(135deg, hsl(220 13% 8%), hsl(220 13% 4%));
+    --gradient-glow: radial-gradient(circle at 50% 0%, hsl(189 95% 55% / 0.15), transparent 70%);
 
-    /* Executive Shadows */
-    --shadow-executive: 0 25px 50px -12px hsl(0 0% 0% / 0.6);
-    --shadow-card: 0 8px 30px -8px hsl(0 0% 0% / 0.4);
-    --shadow-glow: 0 0 30px hsl(var(--primary) / 0.3);
+    /* Premium Shadows with Depth */
+    --shadow-executive: 0 32px 64px -12px hsl(220 13% 0% / 0.7);
+    --shadow-card: 0 8px 32px -8px hsl(220 13% 0% / 0.5);
+    --shadow-glow-primary: 0 0 40px hsl(189 95% 55% / 0.4);
+    --shadow-glow-success: 0 0 40px hsl(142 76% 56% / 0.4);
+    --shadow-glow-warning: 0 0 40px hsl(38 92% 58% / 0.4);
+    --shadow-glow-danger: 0 0 40px hsl(0 84% 60% / 0.4);
 
-    --radius: 0.75rem;
+    /* Animation Timings - Smooth and Premium */
+    --timing-fast: 150ms;
+    --timing-base: 300ms;
+    --timing-slow: 500ms;
+    --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --radius: 0.875rem;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -240,35 +258,162 @@
 }
 
 @layer components {
-  /* Executive Card Variants - now using scaled units */
+  /* Premium Executive Card System */
   .executive-card {
-    @apply bg-card border border-card-border rounded-xl shadow-card;
-    backdrop-filter: blur(10px);
+    @apply bg-card border border-card-border rounded-xl;
+    backdrop-filter: blur(20px) saturate(180%);
+    background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--card-elevated)) 100%);
+    box-shadow: var(--shadow-card), inset 0 1px 0 hsl(var(--border-bright) / 0.1);
     padding: calc(1.5 * var(--u));
     border-radius: calc(var(--radius) * var(--scale));
     max-width: 100%;
     overflow: hidden;
+    position: relative;
+    transition: all var(--timing-base) var(--ease-smooth);
   }
-  
+
+  /* Glass morphism effect */
+  .executive-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.2), transparent);
+    pointer-events: none;
+  }
+
   .executive-card-hover {
-    @apply executive-card transition-all duration-300;
+    @apply executive-card;
     max-width: 100%;
+    cursor: pointer;
   }
-  
+
   .executive-card-hover:hover {
-    @apply shadow-executive;
-    transform: scale(1.01);
+    box-shadow: var(--shadow-executive), var(--shadow-glow-primary), inset 0 1px 0 hsl(var(--border-bright) / 0.2);
+    transform: translateY(-2px) scale(1.005);
+    border-color: hsl(var(--primary) / 0.3);
   }
-  
+
+  .executive-card-hover:active {
+    transform: translateY(0) scale(1);
+    transition: all var(--timing-fast) var(--ease-smooth);
+  }
+
+  /* Hero Metric Cards */
   .metric-card {
     @apply executive-card-hover relative overflow-hidden;
     min-height: calc(8 * var(--u));
     max-width: 100%;
   }
-  
+
+  /* Animated gradient background */
   .metric-card::before {
     content: '';
-    @apply absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none;
+    @apply absolute inset-0 pointer-events-none;
+    background: radial-gradient(circle at 100% 0%, hsl(var(--primary) / 0.08), transparent 50%);
+    opacity: 0;
+    transition: opacity var(--timing-base) var(--ease-smooth);
+  }
+
+  .metric-card:hover::before {
+    opacity: 1;
+  }
+
+  /* Live Status Indicator */
+  .live-indicator {
+    @apply inline-flex items-center gap-2;
+  }
+
+  .live-indicator::before {
+    content: '';
+    @apply w-2 h-2 rounded-full bg-success;
+    box-shadow: 0 0 12px hsl(var(--success) / 0.6);
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  /* Cinematic Number Display */
+  .metric-hero {
+    @apply font-bold tabular-nums tracking-tight;
+    font-size: clamp(2rem, 5vw, 4rem);
+    background: linear-gradient(135deg, hsl(var(--foreground)), hsl(var(--primary)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 60px hsl(var(--primary) / 0.3);
+  }
+
+  /* Interactive Hover Glow */
+  .hover-glow-primary:hover {
+    box-shadow: 0 0 24px hsl(var(--primary) / 0.4), inset 0 0 24px hsl(var(--primary) / 0.1);
+  }
+
+  .hover-glow-success:hover {
+    box-shadow: 0 0 24px hsl(var(--success) / 0.4), inset 0 0 24px hsl(var(--success) / 0.1);
+  }
+
+  .hover-glow-warning:hover {
+    box-shadow: 0 0 24px hsl(var(--warning) / 0.4), inset 0 0 24px hsl(var(--warning) / 0.1);
+  }
+
+  /* Premium Button Styles */
+  .btn-premium {
+    @apply relative overflow-hidden;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    box-shadow: 0 4px 14px hsl(var(--primary) / 0.3), inset 0 1px 0 hsl(var(--primary-glow) / 0.5);
+    transition: all var(--timing-base) var(--ease-smooth);
+  }
+
+  .btn-premium:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px hsl(var(--primary) / 0.4), inset 0 1px 0 hsl(var(--primary-glow) / 0.7);
+  }
+
+  .btn-premium:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px hsl(var(--primary) / 0.3), inset 0 1px 0 hsl(var(--primary-glow) / 0.4);
+  }
+
+  /* Animated Progress Bar */
+  .progress-premium {
+    @apply relative overflow-hidden rounded-full;
+    background: hsl(var(--muted));
+    height: 8px;
+  }
+
+  .progress-premium-fill {
+    @apply h-full rounded-full transition-all duration-1000;
+    background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    box-shadow: 0 0 16px hsl(var(--primary) / 0.6);
+    animation: shimmer 2s infinite linear;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -100% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  /* Badge Variants */
+  .badge-live {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium;
+    background: hsl(var(--success) / 0.15);
+    border: 1px solid hsl(var(--success) / 0.3);
+    color: hsl(var(--success-glow));
+    box-shadow: 0 0 16px hsl(var(--success) / 0.2);
+  }
+
+  .badge-alert {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium;
+    background: hsl(var(--danger) / 0.15);
+    border: 1px solid hsl(var(--danger) / 0.3);
+    color: hsl(var(--danger-glow));
+    animation: pulse-alert 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-alert {
+    0%, 100% { opacity: 1; box-shadow: 0 0 16px hsl(var(--danger) / 0.3); }
+    50% { opacity: 0.8; box-shadow: 0 0 24px hsl(var(--danger) / 0.5); }
   }
   
   /* Gauge Components - scaled */
@@ -320,9 +465,74 @@
   }
 }
 
+/* Premium Animations */
 @keyframes glow {
   from { box-shadow: 0 0 20px hsl(var(--primary) / 0.3); }
   to { box-shadow: 0 0 30px hsl(var(--primary) / 0.6), 0 0 40px hsl(var(--primary) / 0.3); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 12px hsl(var(--success) / 0.6);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+    box-shadow: 0 0 20px hsl(var(--success) / 0.8);
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Stagger animation utility */
+.animate-stagger-1 { animation-delay: 50ms; }
+.animate-stagger-2 { animation-delay: 100ms; }
+.animate-stagger-3 { animation-delay: 150ms; }
+.animate-stagger-4 { animation-delay: 200ms; }
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s var(--ease-smooth) forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.5s var(--ease-smooth) forwards;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.5s var(--ease-smooth) forwards;
 }
 
 /* Structural page grid that uses the global layout tokens */

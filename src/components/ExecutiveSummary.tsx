@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { TrendingUp, TrendingDown, TriangleAlert as AlertTriangle, CircleCheck as CheckCircle, Info, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { CinematicHero } from './CinematicHero';
 
 interface Insight {
   type: 'positive' | 'warning' | 'critical' | 'neutral';
@@ -146,30 +147,35 @@ export function ExecutiveSummary({ metrics }: ExecutiveSummaryProps) {
   const actionableCount = insights.filter(i => i.actionable).length;
 
   return (
-    <Card className="executive-card">
-      <CardHeader>
-        <div className="flex items-start justify-between">
-          <div>
-            <CardTitle className="flex items-center gap-2 text-xl">
-              <Sparkles className="w-5 h-5 text-primary" />
-              AI-Powered Executive Insights
-            </CardTitle>
-            <p className="text-sm text-muted-foreground mt-2">
-              Automatically generated analysis based on current performance metrics
-            </p>
-          </div>
-          <div className="flex gap-2">
-            <Badge variant="outline" className="bg-success/10 text-success border-success/30">
-              {positiveCount} Positive
-            </Badge>
-            {warningCount > 0 && (
-              <Badge variant="outline" className="bg-warning/10 text-warning border-warning/30">
-                {warningCount} Attention
+    <div className="space-y-8">
+      {/* Cinematic Hero Section */}
+      <CinematicHero />
+
+      {/* AI Insights Card */}
+      <Card className="executive-card">
+        <CardHeader>
+          <div className="flex items-start justify-between">
+            <div>
+              <CardTitle className="flex items-center gap-2 text-xl">
+                <Sparkles className="w-5 h-5 text-primary" />
+                AI-Powered Executive Insights
+              </CardTitle>
+              <p className="text-sm text-muted-foreground mt-2">
+                Automatically generated analysis based on current performance metrics
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <Badge variant="outline" className="bg-success/10 text-success border-success/30">
+                {positiveCount} Positive
               </Badge>
-            )}
+              {warningCount > 0 && (
+                <Badge variant="outline" className="bg-warning/10 text-warning border-warning/30">
+                  {warningCount} Attention
+                </Badge>
+              )}
+            </div>
           </div>
-        </div>
-      </CardHeader>
+        </CardHeader>
       <CardContent className="space-y-4">
         {insights.map((insight, index) => (
           <div
@@ -224,5 +230,6 @@ export function ExecutiveSummary({ metrics }: ExecutiveSummaryProps) {
         )}
       </CardContent>
     </Card>
+    </div>
   );
 }
