@@ -32,7 +32,7 @@ import {
   LazyScenarioAnalysis,
   LazyComponentWrapper
 } from './LazyComponents';
-import { GlobalSignalsSection } from './GlobalSignalsSection';
+import { TheLandscape } from './TheLandscape';
 import { PageGrid } from '@/layout/PageGrid';
 import { ExecutiveSummary } from './ExecutiveSummary';
 import { MobileBottomNav } from './MobileBottomNav';
@@ -252,18 +252,9 @@ const ExecutiveDashboard = memo(() => {
               </div>
             </section>
 
-            {/* 2. EXTERNAL CONTEXT - Global & Egypt Indicators */}
+            {/* 2. EXTERNAL CONTEXT - The Landscape */}
             <section id="global-indicators" className="mb-12">
-              <div className="mb-6">
-                <h2 className="heading-lg flex items-center gap-3">
-                  <Globe className="w-6 h-6 text-primary" />
-                  Global & Egypt Indicators
-                </h2>
-                <p className="text-muted-foreground mt-2">
-                  Live macro, prices, and climate signals from official sources affecting operations
-                </p>
-              </div>
-              <GlobalSignalsSection />
+              <TheLandscape />
             </section>
 
             {/* 3. STRATEGIC OVERVIEW - Key Performance Indicators */}
